@@ -19,7 +19,7 @@ class FacebookAudienceNetworkNativeAdFactory: NSObject, FlutterPlatformViewFacto
     }
     
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
-        print("NativeAd > Factory create")
+        print("NativeAd > Factory create!!")
         
         return FacebookAudienceNetworkNativeAdView(_frame: frame,
                                                 _viewId: viewId,
@@ -96,7 +96,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
     }
 
     deinit {
-        print("NativeAd > is deninit")
+        print("NativeAd > is deninit!!")
     }
 
     func view() -> UIView {
@@ -123,7 +123,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * initView
      **/
     func initView() {
-        print("NativeAd > init initView")
+        print("NativeAd > init initView!!")
 
         self.mainView = UIView(frame: self.frame)
         self.mainView.backgroundColor = UIColor.clear
@@ -134,7 +134,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * init Ad
      **/
     func initFB() {
-        print("NativeAd > init initFB")
+        print("NativeAd > init initFB!!")
 
         initNativeAd()
     }
@@ -144,7 +144,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * load
      **/
     func initNativeAd() {
-        print("NativeAd > init initNativeAd")
+        print("NativeAd > init initNativeAd!!")
 
         let existsId: Bool = (self.params["id"] != nil) ? true : false
 
@@ -183,7 +183,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func initNativeAdViewAttributes() {
-        print("NativeAd > initNativeAdViewAttributes")
+        print("NativeAd > initNativeAdViewAttributes!!")
 
         let buttonColor: String = self.params["button_color"] as? String ?? "0xFFF8D000";
         let buttonBorderColor: String = self.params["button_border_color"] as? String ?? "0xFFF8D000";
@@ -221,7 +221,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * Register Native Ad
      */
     func regNativeAdViewTemplate() {
-        print("NativeAd > regNativeAdViewTemplate")
+        print("NativeAd > regNativeAdViewTemplate!!")
 
 //        let isRegistered: Bool = self.nativeAd.isRegistered
 //        if (isRegistered) {
@@ -402,55 +402,53 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
         // padding
         let padding: CGFloat = 0.0;
+        let topPadding: CGFloat = 10.0;
         let bottomPadding: CGFloat = 10.0;
+        let rightPadding: CGFloat = 5.0;
         let adMediaPaddingY: CGFloat = 0.0
-        let adIconPaddingX: CGFloat = 0.0
-        let adIconPaddingY: CGFloat = 0.0
+        let adIconPaddingX: CGFloat = 5.0
         let adTitleLabelPaddingX: CGFloat = 5.0
-        let adTitleLabelPaddingY: CGFloat = 4.0
-        let adSponsoredPaddingX: CGFloat = 5.0
         let adSponsoredPaddingY: CGFloat = 0.0
-        let adOptionsPaddingY: CGFloat = 0.0
-        let adBodyLabelPaddingX: CGFloat = 5.0
+        let adOptionsPaddingY: CGFloat = 15.0
         let adBodyLabelPaddingY: CGFloat = 5.0
-        let adCallToActionPaddingX: CGFloat = 10.0
         let adCallToActionPaddingY: CGFloat = 5.0
 
         // width/height
         let viewWidth: CGFloat = width
         let viewHeight: CGFloat = height - bottomPadding
-        let adIconWidth: CGFloat = 0.0
-        let adIconHeight: CGFloat = 0.0
+        let adIconWidth: CGFloat = 40.0
+        let adIconHeight: CGFloat = 40.0
         let adOptionsWidth: CGFloat = 40.0
         let adOptionsHeight: CGFloat = 20.0
-        let adTitleLabelWidth: CGFloat = viewWidth - adOptionsWidth - adTitleLabelPaddingX
+        let adTitleLabelWidth: CGFloat = viewWidth - adIconPaddingX - adTitleLabelPaddingX - adIconWidth - adIconPaddingX - adOptionsWidth - rightPadding
         let adTitleLabelHeight: CGFloat = 20.0
-        let adSponsoredWidth: CGFloat = viewWidth - adOptionsWidth - adSponsoredPaddingX
+        let adSponsoredWidth: CGFloat = adTitleLabelWidth
         let adSponsoredHeight: CGFloat = 20.0
-        let adBodyLabelWidth: CGFloat = viewWidth - (adBodyLabelPaddingX * 2.0)
+        let adBodyLabelWidth: CGFloat = viewWidth - adIconPaddingX - adTitleLabelPaddingX - adIconWidth - adIconPaddingX - rightPadding
         let adBodyLabelHeight: CGFloat = 70.0
-        let adCallToActionWidth: CGFloat = viewWidth - (adCallToActionPaddingX * 2.0)
+        let adCallToActionWidth: CGFloat = adBodyLabelWidth
         let adCallToActionHeight: CGFloat = 36.0
-        let adMediaWidth: CGFloat = viewWidth
-        let adMediaHeight: CGFloat = viewHeight - adMediaPaddingY - adTitleLabelPaddingY - adTitleLabelHeight - adSponsoredPaddingY - adSponsoredHeight - adBodyLabelPaddingY - adBodyLabelHeight - adCallToActionPaddingY - adCallToActionHeight
+        let adMediaWidth: CGFloat = adBodyLabelWidth
+        let adMediaHeight: CGFloat = viewHeight - topPadding - adTitleLabelHeight - adSponsoredPaddingY - adSponsoredHeight - adMediaPaddingY
+                - adBodyLabelPaddingY - adBodyLabelHeight - adCallToActionPaddingY - adCallToActionHeight
         let adCoverWidth: CGFloat = isMediaCover ? adMediaWidth - 16.0 : 0.0
         let adCoverHeight: CGFloat = isMediaCover ? adMediaHeight : 0.0
-
-        let adMediaX: CGFloat = 0.0
-        let adMediaY: CGFloat = 0.0
-        let adCoverX: CGFloat = isMediaCover ? adMediaX + 16.0 : 0.0
-        let adCoverY: CGFloat = isMediaCover ? adMediaY : 0.0
+        
         let adIconX: CGFloat = adIconPaddingX
-        let adIconY: CGFloat = adIconPaddingY
-        let adTitleLabelX: CGFloat = adTitleLabelPaddingX
-        let adTitleLabelY: CGFloat = adMediaX + adMediaHeight + adTitleLabelPaddingY
-        let adSponsoredX: CGFloat = adSponsoredPaddingX
+        let adIconY: CGFloat = topPadding
+        let adTitleLabelX: CGFloat = adIconX + adIconWidth + adIconPaddingX + adTitleLabelPaddingX
+        let adTitleLabelY: CGFloat = topPadding
+        let adSponsoredX: CGFloat = adTitleLabelX
         let adSponsoredY: CGFloat = adTitleLabelY + adTitleLabelHeight + adSponsoredPaddingY
-        let adOptionsX: CGFloat = viewWidth - adOptionsWidth
-        let adOptionsY: CGFloat = adMediaX + adMediaHeight + adOptionsPaddingY
-        let adBodyLabelX: CGFloat = adBodyLabelPaddingX
-        let adBodyLabelY: CGFloat = adSponsoredY + adSponsoredHeight + adBodyLabelPaddingY
-        let adCallToActionX: CGFloat = adCallToActionPaddingX;
+        let adOptionsX: CGFloat = viewWidth - adOptionsWidth - rightPadding
+        let adOptionsY: CGFloat = adOptionsPaddingY
+        let adMediaX: CGFloat = adTitleLabelX
+        let adMediaY: CGFloat = adSponsoredY + adSponsoredHeight + adMediaPaddingY
+        let adCoverX: CGFloat = isMediaCover ? adMediaX + 16.0 : 0
+        let adCoverY: CGFloat = isMediaCover ? adMediaY : 0
+        let adBodyLabelX: CGFloat = adTitleLabelX
+        let adBodyLabelY: CGFloat = adTitleLabelY + adMediaHeight + adTitleLabelHeight + adBodyLabelPaddingY
+        let adCallToActionX: CGFloat = adTitleLabelX;
         let adCallToActionY: CGFloat = adBodyLabelY + adBodyLabelHeight + adCallToActionPaddingY
 
         nativeAdLayout.adView = CGRect(x: padding, y: padding, width: viewWidth, height: viewHeight)
@@ -493,7 +491,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
         // Icon
         self.adIconView = FBAdIconView.init(frame: nativeAdLayout.adIconRect)
-        self.adIconView.layer.cornerRadius = nativeAdLayout.adIconRect.width / 2
+        self.adIconView.layer.cornerRadius = 13
         self.adView.addSubview(self.adIconView)
 
         // Title

@@ -18,8 +18,8 @@ struct FANConstant{
     static let CODE_ARG = "code";
     static let ERROR_ARG = "error";
 
-    static let NATIVE_AD_HORIZONTAL = 0;
-    static let NATIVE_AD_VERTICAL = 1;
-    static let NATIVE_BANNER_AD = 2;
-    static let NATIVE_AD_TEMPLATE = 3;
+    static let NATIVE_AD_TEMPLATE = 0;
+    static let NATIVE_BANNER_AD = 1;
+    static let NATIVE_AD_HORIZONTAL = 2;
+    static let NATIVE_AD_VERTICAL = 3;
 }
