@@ -208,9 +208,9 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         self.nativeAdViewAttributes.descriptionColor = descColorUIColor
         self.sponsoredColor = UIColor.init(hexString: "0xFFA1ACC0")
 
-        self.nativeAdViewAttributes.titleFont = UIFont.systemFont(ofSize: 12)
+        self.nativeAdViewAttributes.titleFont = UIFont.boldSystemFont(ofSize: 15)
         self.nativeAdViewAttributes.descriptionFont = UIFont.systemFont(ofSize: 14)
-        self.nativeAdViewAttributes.buttonTitleFont = UIFont.systemFont(ofSize: 13)
+        self.nativeAdViewAttributes.buttonTitleFont = UIFont.boldSystemFont(ofSize: 14)
         self.sponsoredFont = UIFont.systemFont(ofSize: 10)
 
         self.descriptionLabelLines = 2
@@ -405,13 +405,13 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let topPadding: CGFloat = 10.0;
         let bottomPadding: CGFloat = 10.0;
         let rightPadding: CGFloat = 5.0;
-        let adMediaPaddingY: CGFloat = 0.0
+        let adMediaPaddingY: CGFloat = 5.0
         let adIconPaddingX: CGFloat = 5.0
         let adTitleLabelPaddingX: CGFloat = 5.0
         let adSponsoredPaddingY: CGFloat = 0.0
         let adOptionsPaddingY: CGFloat = 15.0
         let adBodyLabelPaddingY: CGFloat = 5.0
-        let adCallToActionPaddingY: CGFloat = 5.0
+        let adCallToActionPaddingY: CGFloat = 0.0
 
         // width/height
         let viewWidth: CGFloat = width
@@ -423,11 +423,11 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let adTitleLabelWidth: CGFloat = viewWidth - adIconPaddingX - adTitleLabelPaddingX - adIconWidth - adIconPaddingX - adOptionsWidth - rightPadding
         let adTitleLabelHeight: CGFloat = 20.0
         let adSponsoredWidth: CGFloat = adTitleLabelWidth
-        let adSponsoredHeight: CGFloat = 20.0
+        let adSponsoredHeight: CGFloat = 15.0
         let adBodyLabelWidth: CGFloat = viewWidth - adIconPaddingX - adTitleLabelPaddingX - adIconWidth - adIconPaddingX - rightPadding
-        let adBodyLabelHeight: CGFloat = 70.0
+        let adBodyLabelHeight: CGFloat = 45.0
         let adCallToActionWidth: CGFloat = adBodyLabelWidth
-        let adCallToActionHeight: CGFloat = 36.0
+        let adCallToActionHeight: CGFloat = 37.0
         let adMediaWidth: CGFloat = adBodyLabelWidth
         let adMediaHeight: CGFloat = viewHeight - topPadding - adTitleLabelHeight - adSponsoredPaddingY - adSponsoredHeight - adMediaPaddingY
                 - adBodyLabelPaddingY - adBodyLabelHeight - adCallToActionPaddingY - adCallToActionHeight
@@ -446,10 +446,10 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let adMediaY: CGFloat = adSponsoredY + adSponsoredHeight + adMediaPaddingY
         let adCoverX: CGFloat = isMediaCover ? adMediaX + 16.0 : 0
         let adCoverY: CGFloat = isMediaCover ? adMediaY : 0
-        let adBodyLabelX: CGFloat = adTitleLabelX
-        let adBodyLabelY: CGFloat = adTitleLabelY + adMediaHeight + adTitleLabelHeight + adBodyLabelPaddingY
         let adCallToActionX: CGFloat = adTitleLabelX;
-        let adCallToActionY: CGFloat = adBodyLabelY + adBodyLabelHeight + adCallToActionPaddingY
+        let adCallToActionY: CGFloat = adMediaY + adMediaHeight + adCallToActionPaddingY
+        let adBodyLabelX: CGFloat = adTitleLabelX
+        let adBodyLabelY: CGFloat = adCallToActionY + adCallToActionHeight + adBodyLabelPaddingY
 
         nativeAdLayout.adView = CGRect(x: padding, y: padding, width: viewWidth, height: viewHeight)
         nativeAdLayout.adMediaRect = CGRect(x: adMediaX, y: adMediaY, width: adMediaWidth, height: adMediaHeight)
@@ -521,11 +521,28 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         self.adCallToActionButton.backgroundColor = self.nativeAdViewAttributes.buttonColor
         self.adCallToActionButton.setTitle(self.nativeAd.callToAction ?? "" , for: .normal)
         self.adCallToActionButton.setTitleColor(self.nativeAdViewAttributes.buttonTitleColor, for: .normal)
+        
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium, scale: .medium)
+        let rightImage : UIImage = UIImage(systemName: "chevron.right", withConfiguration: symbolConfig)!
+        self.adCallToActionButton.setImage(rightImage, for: .normal)
         self.adCallToActionButton.titleLabel?.font = self.nativeAdViewAttributes.buttonTitleFont
         self.adCallToActionButton.titleLabel?.textAlignment = .left
+        self.adCallToActionButton.imageView?.tintColor = self.nativeAdViewAttributes.buttonTitleColor
+        
+        let buttonFrame = self.adCallToActionButton.frame
+        let titleWidth = self.adCallToActionButton.titleLabel!.frame.width
+        let imageWidth = self.adCallToActionButton.imageView!.frame.width
+        self.adCallToActionButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: buttonFrame.width - imageWidth - titleWidth)
+        self.adCallToActionButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonFrame.width - imageWidth - 5, bottom: 0, right: 5)
+        
+        let border = CALayer()
+        border.borderWidth = 0.5
+        border.frame = CGRect(x: 0, y: buttonFrame.height-0.5, width: buttonFrame.width, height: 0.5)
+        border.borderColor = self.nativeAdViewAttributes.buttonBorderColor?.cgColor
+        self.adCallToActionButton.layer.addSublayer(border)
         self.adView.addSubview(self.adCallToActionButton)
-
-        //
+        
+        // Register
         self.nativeAd.unregisterView()
         self.nativeAd.registerView(
             forInteraction: self.adView,
