@@ -210,14 +210,16 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
         TextView adSponsored = nativeVerticalAd.findViewById(R.id.native_ad_sponsored_label);
         TextView adBody = nativeVerticalAd.findViewById(R.id.native_ad_body);
         RelativeLayout adCallToAction = nativeVerticalAd.findViewById(R.id.native_ad_call_to_action);
+        RelativeLayout adCallToActionContent = nativeVerticalAd.findViewById(R.id.native_ad_call_to_action_content);
         TextView adCallToActionText = nativeVerticalAd.findViewById(R.id.native_ad_button_text);
         MediaView adMedia = nativeVerticalAd.findViewById(R.id.native_ad_media);
-        adMedia.removeAllViews();
 
         adMain.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
         adTitle.setTextColor(Color.parseColor((String) args.get("title_color")));
         adSponsored.setTextColor(Color.parseColor((String) args.get("title_color")));
         adBody.setTextColor(Color.parseColor((String) args.get("desc_color")));
+        adCallToAction.setBackgroundColor(Color.parseColor((String) args.get("title_color")));
+        adCallToActionContent.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
         adCallToActionText.setTextColor(Color.parseColor((String) args.get("title_color")));
 
         adTitle.setText(nativeAd.getAdvertiserName());
