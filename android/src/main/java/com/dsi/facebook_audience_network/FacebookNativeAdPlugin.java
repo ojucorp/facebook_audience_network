@@ -217,7 +217,7 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
         adMain.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
         adTitle.setTextColor(Color.parseColor((String) args.get("title_color")));
         adSponsored.setTextColor(Color.parseColor((String) args.get("title_color")));
-        adBody.setTextColor(Color.parseColor((String) args.get("desc_color")));
+        adBody.setTextColor(Color.parseColor((String) args.get("title_color")));
         adCallToAction.setBackgroundColor(Color.parseColor((String) args.get("title_color")));
         adCallToActionContent.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
         adCallToActionText.setTextColor(Color.parseColor((String) args.get("title_color")));
