@@ -2,19 +2,29 @@ package com.dsi.facebook_audience_network;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
+import com.facebook.ads.AdOptionsView;
+import com.facebook.ads.MediaView;
+import com.facebook.ads.MediaViewVideoRenderer;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdBase;
+import com.facebook.ads.NativeAdLayout;
 import com.facebook.ads.NativeAdListener;
 import com.facebook.ads.NativeAdView;
 import com.facebook.ads.NativeAdViewAttributes;
 import com.facebook.ads.NativeBannerAd;
 import com.facebook.ads.NativeBannerAdView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.flutter.plugin.common.BinaryMessenger;
@@ -47,6 +57,7 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
     private final HashMap args;
     private final Context context;
 
+    private Integer adType;
     private NativeAd nativeAd;
     private NativeBannerAd bannerAd;
 
@@ -59,6 +70,8 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
 
         this.args = args;
         this.context = context;
+
+        adType = (Integer) args.get("ad_type");
 
         if ((boolean) args.get("banner_ad")) {
             bannerAd = new NativeBannerAd(context, (String) this.args.get("id"));
@@ -146,12 +159,16 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
         adView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showNativeAd();
+                if (adType == 3) {
+                    showNativeAd();
+                } else {
+                    defaultNativeAd();
+                }
             }
         }, 200);
     }
 
-    private void showNativeAd() {
+    private void defaultNativeAd() {
         if (adView.getChildCount() > 0)
             adView.removeAllViews();
 
@@ -167,6 +184,58 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
                     this.nativeAd,
                     getViewAttributes(this.context, this.args)));
         }
+    }
+
+    private void showNativeAd() {
+        if (adView.getChildCount() > 0)
+            adView.removeAllViews();
+
+        nativeAd.unregisterView();
+
+        // Add the Ad view into the ad container.
+        LayoutInflater inflater = LayoutInflater.from(context);
+        // Inflate the Ad view.  The layout referenced should be the one you created in the last step.
+        NativeAdLayout nativeVerticalAd = (NativeAdLayout) inflater.inflate(R.layout.fb_native_ad_layout_vertical, adView, false);
+
+        // Add the AdOptionsView
+        LinearLayout adChoicesContainer = nativeVerticalAd.findViewById(R.id.native_ad_choices);
+        AdOptionsView adOptionsView = new AdOptionsView(context, nativeAd, (NativeAdLayout) nativeVerticalAd.findViewById(R.id.native_ad_container));
+        adOptionsView.setIconColor(Color.parseColor((String) args.get("title_color")));
+        adChoicesContainer.removeAllViews();
+        adChoicesContainer.addView(adOptionsView, 0);
+
+        LinearLayout adMain = nativeVerticalAd.findViewById(R.id.native_ad_main);
+        MediaView adIcon = nativeVerticalAd.findViewById(R.id.native_ad_icon);
+        TextView adTitle = nativeVerticalAd.findViewById(R.id.native_ad_title);
+        TextView adSponsored = nativeVerticalAd.findViewById(R.id.native_ad_sponsored_label);
+        TextView adBody = nativeVerticalAd.findViewById(R.id.native_ad_body);
+        RelativeLayout adCallToAction = nativeVerticalAd.findViewById(R.id.native_ad_call_to_action);
+        TextView adCallToActionText = nativeVerticalAd.findViewById(R.id.native_ad_button_text);
+        MediaView adMedia = nativeVerticalAd.findViewById(R.id.native_ad_media);
+        adMedia.removeAllViews();
+
+        adMain.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
+        adTitle.setTextColor(Color.parseColor((String) args.get("title_color")));
+        adSponsored.setTextColor(Color.parseColor((String) args.get("title_color")));
+        adBody.setTextColor(Color.parseColor((String) args.get("desc_color")));
+        adCallToActionText.setTextColor(Color.parseColor((String) args.get("title_color")));
+
+        adTitle.setText(nativeAd.getAdvertiserName());
+        adSponsored.setText(nativeAd.getSponsoredTranslation());
+        adBody.setText(nativeAd.getAdBodyText());
+        adCallToAction.setVisibility(nativeAd.hasCallToAction()? View.VISIBLE : View.INVISIBLE);
+        adCallToActionText.setText(nativeAd.getAdCallToAction());
+
+        // Create a list of clickable views
+        ArrayList<View> clickableViews = new ArrayList<View>();
+        clickableViews.add(adTitle);
+        clickableViews.add(adCallToAction);
+
+        // Register the Title and CTA button to listen for clicks.
+        nativeAd.registerViewForInteraction(
+                adView, adMedia, adIcon, clickableViews
+        );
+        adView.addView(nativeVerticalAd);
 
         channel.invokeMethod(FacebookConstants.LOADED_METHOD, args);
     }

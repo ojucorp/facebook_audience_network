@@ -196,6 +196,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           creationParamsCodec: StandardMessageCodec(),
           creationParams: <String, dynamic>{
             "id": widget.placementId,
+            "ad_type": widget.adType.index,
             "banner_ad":
                 widget.adType == NativeAdType.NATIVE_BANNER_AD ? true : false,
             // height param is only for Banner Ads. Native Ad's height is
