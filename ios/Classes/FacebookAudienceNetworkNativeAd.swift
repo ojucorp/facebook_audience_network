@@ -487,6 +487,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         // Choice
         self.adOptionsView = FBAdOptionsView.init(frame: nativeAdLayout.adOptionsRect)
         self.adOptionsView.backgroundColor = self.nativeAdViewAttributes.backgroundColor
+        self.adOptionsView.foregroundColor = self.nativeAdViewAttributes.titleColor
         self.adView.addSubview(self.adOptionsView)
 
         // Icon
@@ -504,7 +505,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         // Sponsored
         self.adSponsoredLabel = UILabel.init(frame: nativeAdLayout.adSponsoredRect)
         self.adSponsoredLabel.text = self.nativeAd.sponsoredTranslation ?? ""
-        self.adSponsoredLabel.textColor = sponsoredColor
+        self.adSponsoredLabel.textColor = self.nativeAdViewAttributes.titleColor
         self.adSponsoredLabel.font = sponsoredFont
         self.adView.addSubview(self.adSponsoredLabel)
 
@@ -518,9 +519,9 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
         // Button
         self.adCallToActionButton = UIButton.init(frame: nativeAdLayout.adCallToActionRect)
-        self.adCallToActionButton.backgroundColor = self.nativeAdViewAttributes.buttonColor
+        self.adCallToActionButton.backgroundColor = self.nativeAdViewAttributes.backgroundColor
         self.adCallToActionButton.setTitle(self.nativeAd.callToAction ?? "" , for: .normal)
-        self.adCallToActionButton.setTitleColor(self.nativeAdViewAttributes.buttonTitleColor, for: .normal)
+        self.adCallToActionButton.setTitleColor(self.nativeAdViewAttributes.titleColor, for: .normal)
         
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium, scale: .medium)
         let rightImage : UIImage = UIImage(systemName: "chevron.right", withConfiguration: symbolConfig)!

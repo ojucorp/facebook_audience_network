@@ -11,6 +11,7 @@ class FANPluginFactory: NSObject {
         channel = _channel
         
         super.init()
+        FBAdSettings.setAdvertiserTrackingEnabled(true)
         
         channel.setMethodCallHandler { (call, result) in
             switch call.method{
