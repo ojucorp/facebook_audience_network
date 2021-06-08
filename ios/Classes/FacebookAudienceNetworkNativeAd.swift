@@ -402,14 +402,14 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
         // padding
         let padding: CGFloat = 0.0;
-        let topPadding: CGFloat = 10.0;
-        let bottomPadding: CGFloat = 10.0;
-        let rightPadding: CGFloat = 5.0;
+        let topPadding: CGFloat = 0.0;
+        let bottomPadding: CGFloat = 0.0;
+        let rightPadding: CGFloat = 0.0;
         let adMediaPaddingY: CGFloat = 5.0
-        let adIconPaddingX: CGFloat = 5.0
+        let adIconPaddingX: CGFloat = 0.0
         let adTitleLabelPaddingX: CGFloat = 5.0
         let adSponsoredPaddingY: CGFloat = 0.0
-        let adOptionsPaddingY: CGFloat = 15.0
+        let adOptionsPaddingY: CGFloat = 10.0
         let adBodyLabelPaddingY: CGFloat = 5.0
         let adCallToActionPaddingY: CGFloat = 0.0
 
@@ -427,7 +427,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let adBodyLabelWidth: CGFloat = viewWidth - adIconPaddingX - adTitleLabelPaddingX - adIconWidth - adIconPaddingX - rightPadding
         let adBodyLabelHeight: CGFloat = 45.0
         let adCallToActionWidth: CGFloat = adBodyLabelWidth
-        let adCallToActionHeight: CGFloat = 37.0
+        let adCallToActionHeight: CGFloat = 40.0
         let adMediaWidth: CGFloat = adBodyLabelWidth
         let adMediaHeight: CGFloat = viewHeight - topPadding - adTitleLabelHeight - adSponsoredPaddingY - adSponsoredHeight - adMediaPaddingY
                 - adBodyLabelPaddingY - adBodyLabelHeight - adCallToActionPaddingY - adCallToActionHeight
@@ -512,7 +512,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         // Body
         self.adBodyLabel = UILabel.init(frame: nativeAdLayout.adBodyLabelRect)
         self.adBodyLabel.text = self.nativeAd.bodyText ?? ""
-        self.adBodyLabel.textColor = self.nativeAdViewAttributes.descriptionColor
+        self.adBodyLabel.textColor = self.nativeAdViewAttributes.titleColor
         self.adBodyLabel.font = self.nativeAdViewAttributes.descriptionFont
         self.adBodyLabel.numberOfLines = descriptionLabelLines
         self.adView.addSubview(self.adBodyLabel)
@@ -528,7 +528,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         self.adCallToActionButton.setImage(rightImage, for: .normal)
         self.adCallToActionButton.titleLabel?.font = self.nativeAdViewAttributes.buttonTitleFont
         self.adCallToActionButton.titleLabel?.textAlignment = .left
-        self.adCallToActionButton.imageView?.tintColor = self.nativeAdViewAttributes.buttonTitleColor
+        self.adCallToActionButton.imageView?.tintColor = self.nativeAdViewAttributes.titleColor
         
         let buttonFrame = self.adCallToActionButton.frame
         let titleWidth = self.adCallToActionButton.titleLabel!.frame.width
@@ -539,7 +539,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let border = CALayer()
         border.borderWidth = 0.5
         border.frame = CGRect(x: 0, y: buttonFrame.height-0.5, width: buttonFrame.width, height: 0.5)
-        border.borderColor = self.nativeAdViewAttributes.buttonBorderColor?.cgColor
+        border.borderColor = self.nativeAdViewAttributes.titleColor?.cgColor
         self.adCallToActionButton.layer.addSublayer(border)
         self.adView.addSubview(self.adCallToActionButton)
         
