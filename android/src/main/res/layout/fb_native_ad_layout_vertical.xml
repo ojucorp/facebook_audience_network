@@ -76,7 +76,7 @@
             <com.facebook.ads.MediaView
                 android:id="@+id/native_ad_media"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="15dp"/>
 
             <RelativeLayout
@@ -101,6 +101,7 @@
                         android:textStyle="normal" />
 
                     <ImageView
+                        android:id="@+id/native_ad_button_navigate_next"
                         android:src="@drawable/ic_baseline_navigate_next_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

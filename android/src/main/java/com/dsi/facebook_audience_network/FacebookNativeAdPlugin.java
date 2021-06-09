@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -212,6 +213,7 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
         RelativeLayout adCallToAction = nativeVerticalAd.findViewById(R.id.native_ad_call_to_action);
         RelativeLayout adCallToActionContent = nativeVerticalAd.findViewById(R.id.native_ad_call_to_action_content);
         TextView adCallToActionText = nativeVerticalAd.findViewById(R.id.native_ad_button_text);
+        ImageView adCallToActionNavigateNext = nativeVerticalAd.findViewById(R.id.native_ad_button_navigate_next);
         MediaView adMedia = nativeVerticalAd.findViewById(R.id.native_ad_media);
 
         adMain.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
@@ -221,6 +223,7 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
         adCallToAction.setBackgroundColor(Color.parseColor((String) args.get("title_color")));
         adCallToActionContent.setBackgroundColor(Color.parseColor((String) args.get("bg_color")));
         adCallToActionText.setTextColor(Color.parseColor((String) args.get("title_color")));
+        adCallToActionNavigateNext.setColorFilter(Color.parseColor((String) args.get("title_color")));
 
         adTitle.setText(nativeAd.getAdvertiserName());
         adSponsored.setText(nativeAd.getSponsoredTranslation());
