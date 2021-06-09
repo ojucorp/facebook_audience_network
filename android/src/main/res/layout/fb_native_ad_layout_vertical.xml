@@ -82,7 +82,7 @@
             <RelativeLayout
                 android:id="@+id/native_ad_call_to_action"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
+                android:layout_height="40dp"
                 android:paddingBottom="0.5dp">
 
                 <RelativeLayout
