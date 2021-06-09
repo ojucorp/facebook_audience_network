@@ -405,9 +405,9 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let topPadding: CGFloat = 0.0;
         let bottomPadding: CGFloat = 0.0;
         let rightPadding: CGFloat = 0.0;
-        let adMediaPaddingY: CGFloat = 5.0
+        let adMediaPaddingY: CGFloat = 15.0
         let adIconPaddingX: CGFloat = 0.0
-        let adTitleLabelPaddingX: CGFloat = 5.0
+        let adTitleLabelPaddingX: CGFloat = 10.0
         let adSponsoredPaddingY: CGFloat = 0.0
         let adOptionsPaddingY: CGFloat = 10.0
         let adBodyLabelPaddingY: CGFloat = 5.0
