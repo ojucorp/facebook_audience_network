@@ -228,6 +228,7 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
         adTitle.setText(nativeAd.getAdvertiserName());
         adSponsored.setText(nativeAd.getSponsoredTranslation());
         adBody.setText(nativeAd.getAdBodyText());
+        adBody.setVisibility(nativeAd.getAdBodyText().isEmpty() ? View.INVISIBLE : View.VISIBLE);
         adCallToAction.setVisibility(nativeAd.hasCallToAction()? View.VISIBLE : View.INVISIBLE);
         adCallToActionText.setText(nativeAd.getAdCallToAction());
 

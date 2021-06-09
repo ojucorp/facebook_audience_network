@@ -73,11 +73,17 @@
                     android:orientation="horizontal" />
             </LinearLayout>
 
-            <com.facebook.ads.MediaView
-                android:id="@+id/native_ad_media"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1">
+
+                <com.facebook.ads.MediaView
+                    android:id="@+id/native_ad_media"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
 
             <RelativeLayout
                 android:id="@+id/native_ad_call_to_action"
@@ -117,7 +123,6 @@
                 android:layout_marginTop="10dp"
                 android:includeFontPadding="false"
                 android:maxLines="2"
-                android:textColor="@android:color/white"
                 android:textSize="14dp"
                 android:textStyle="normal" />
 
