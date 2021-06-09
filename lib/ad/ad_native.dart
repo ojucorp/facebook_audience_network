@@ -106,6 +106,15 @@ class FacebookNativeAd extends StatefulWidget {
   /// Expand animation duration in milliseconds
   final int expandAnimationDuraion;
 
+  /// Ad created timestamp seconds
+  final int timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+  /// Ad ready status
+  bool isAdReady = false;
+
+  /// Ad invalidated status
+  bool invalidated = false;
+
   /// This widget can be used to display customizable native ads and native
   /// banner ads.
   FacebookNativeAd({
@@ -136,7 +145,6 @@ class FacebookNativeAd extends StatefulWidget {
 class _FacebookNativeAdState extends State<FacebookNativeAd>
     with AutomaticKeepAliveClientMixin {
   final double containerHeight = Platform.isAndroid ? 1.0 : 0.1;
-  bool isAdReady = false;
   @override
   bool get wantKeepAlive => widget.keepAlive;
 
@@ -157,7 +165,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
     return AnimatedContainer(
       color: Colors.transparent,
       width: width,
-      height: isAdReady || widget.keepExpandedWhileLoading
+      height: widget.isAdReady || widget.keepExpandedWhileLoading
           ? widget.height
           : containerHeight,
       duration: Duration(milliseconds: widget.expandAnimationDuraion),
@@ -165,7 +173,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
         alignment: Alignment.center,
         children: <Widget>[
           Positioned.fill(
-            top: isAdReady || widget.keepExpandedWhileLoading
+            top: widget.isAdReady || widget.keepExpandedWhileLoading
                 ? 0
                 : -(widget.height - containerHeight),
             child: ConstrainedBox(
@@ -294,9 +302,9 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           if (widget.listener != null)
             widget.listener!(NativeAdResult.LOADED, call.arguments);
 
-          if (!isAdReady) {
+          if (!widget.isAdReady) {
             setState(() {
-              isAdReady = true;
+              widget.isAdReady = true;
             });
           }
 
@@ -307,9 +315,9 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           break;
         case LOAD_SUCCESS_METHOD:
           if (!mounted) Future<dynamic>.value(true);
-          if (!isAdReady) {
+          if (!widget.isAdReady) {
             setState(() {
-              isAdReady = true;
+              widget.isAdReady = true;
             });
           }
           break;
@@ -326,6 +334,8 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
             widget.listener!(NativeAdResult.MEDIA_DOWNLOADED, call.arguments);
           break;
       }
+
+      widget.invalidated = call.arguments['invalidated'];
 
       return Future<dynamic>.value(true);
 
