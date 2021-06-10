@@ -98,7 +98,7 @@ class FacebookNativeAd extends StatefulWidget {
   final bool isMediaCover;
 
   /// This defines if the ad view to be kept alive.
-  bool keepAlive;
+  final bool keepAlive;
 
   /// This defines if the ad view should be collapsed while loading
   final bool keepExpandedWhileLoading;
@@ -114,6 +114,9 @@ class FacebookNativeAd extends StatefulWidget {
 
   /// Ad invalidated status
   bool invalidated = false;
+
+  /// Ad invalidated callback for parent widget
+  final ValueChanged<bool>? invalidatedCallback;
 
   /// This widget can be used to display customizable native ads and native
   /// banner ads.
@@ -132,6 +135,7 @@ class FacebookNativeAd extends StatefulWidget {
     this.buttonColor,
     this.buttonTitleColor,
     this.buttonBorderColor,
+    this.invalidatedCallback,
     this.isMediaCover = false,
     this.keepAlive = false,
     this.keepExpandedWhileLoading = true,
@@ -347,11 +351,8 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
         widget.invalidated = true;
       }
 
-      if (widget.invalidated) {
-        widget.keepAlive = false;
-        updateKeepAlive();
-        setState(() {
-        });
+      if (widget.invalidated && widget.invalidatedCallback != null) {
+        widget.invalidatedCallback!(true);
       }
 
       return Future<dynamic>.value(true);
