@@ -98,7 +98,7 @@ class FacebookNativeAd extends StatefulWidget {
   final bool isMediaCover;
 
   /// This defines if the ad view to be kept alive.
-  bool keepAlive;
+  final bool keepAlive;
 
   /// This defines if the ad view should be collapsed while loading
   final bool keepExpandedWhileLoading;
@@ -114,9 +114,6 @@ class FacebookNativeAd extends StatefulWidget {
 
   /// Ad invalidated status
   bool invalidated = false;
-
-  /// Ad invalidated callback for parent widget
-  final ValueChanged<bool>? invalidatedCallback;
 
   /// This widget can be used to display customizable native ads and native
   /// banner ads.
@@ -135,7 +132,6 @@ class FacebookNativeAd extends StatefulWidget {
     this.buttonColor,
     this.buttonTitleColor,
     this.buttonBorderColor,
-    this.invalidatedCallback,
     this.isMediaCover = false,
     this.keepAlive = false,
     this.keepExpandedWhileLoading = true,
@@ -304,17 +300,12 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
     channel.setMethodCallHandler((MethodCall call) {
       switch (call.method) {
         case ERROR_METHOD:
-          if (widget.listener != null) {
+          if (widget.listener != null)
             widget.listener!(NativeAdResult.ERROR, call.arguments);
-            widget.keepAlive = false;
-            deactivate();
-            if (widget.invalidatedCallback != null) {
-              widget.invalidatedCallback!(true);
-            }
-            setState(() {
-              widget.invalidated = true;
-            });
-          }
+
+          setState(() {
+            widget.invalidated = true;
+          });
           break;
         case LOADED_METHOD:
           if (widget.listener != null)
@@ -351,17 +342,6 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           if (widget.listener != null)
             widget.listener!(NativeAdResult.MEDIA_DOWNLOADED, call.arguments);
           break;
-      }
-
-      final params = call.arguments as Map<String, dynamic>;
-      if (params.containsKey('invalidated')) {
-        widget.invalidated = call.arguments['invalidated'];
-      } else {
-        widget.invalidated = true;
-      }
-
-      if (widget.invalidatedCallback != null) {
-        widget.invalidatedCallback!(true);
       }
 
       return Future<dynamic>.value(true);
