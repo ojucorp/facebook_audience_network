@@ -98,7 +98,7 @@ class FacebookNativeAd extends StatefulWidget {
   final bool isMediaCover;
 
   /// This defines if the ad view to be kept alive.
-  final bool keepAlive;
+  bool keepAlive;
 
   /// This defines if the ad view should be collapsed while loading
   final bool keepExpandedWhileLoading;
@@ -159,6 +159,11 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
 
   Widget build(BuildContext context) {
     super.build(context);
+
+    if (widget.invalidated) {
+      return Container();
+    }
+
     double width = widget.width == double.infinity
         ? MediaQuery.of(context).size.width
         : widget.width;
@@ -336,6 +341,10 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
       }
 
       widget.invalidated = call.arguments['invalidated'];
+      if (widget.invalidated) {
+        widget.keepAlive = false;
+        updateKeepAlive();
+      }
 
       return Future<dynamic>.value(true);
 

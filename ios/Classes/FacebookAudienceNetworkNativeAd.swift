@@ -6,21 +6,15 @@ import FBAudienceNetwork
 class FacebookAudienceNetworkNativeAdFactory: NSObject, FlutterPlatformViewFactory {
     let registrar: FlutterPluginRegistrar
     init(_registrar: FlutterPluginRegistrar) {
-        print("NativeAd > Factory register")
-        
         registrar = _registrar
         super.init()
     }
     
     func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
-        print("NativeAd > Factory createArgsCodec")
-        
         return FlutterStandardMessageCodec.sharedInstance()
     }
     
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
-        print("NativeAd > Factory create!!")
-        
         return FacebookAudienceNetworkNativeAdView(_frame: frame,
                                                 _viewId: viewId,
                                                 _params: args as? Dictionary<String, Any> ?? nil,
@@ -123,8 +117,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * initView
      **/
     func initView() {
-        print("NativeAd > init initView!!")
-
         self.mainView = UIView(frame: self.frame)
         self.mainView.backgroundColor = UIColor.clear
     }
@@ -134,8 +126,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * init Ad
      **/
     func initFB() {
-        print("NativeAd > init initFB!!")
-
         initNativeAd()
     }
 
@@ -144,8 +134,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * load
      **/
     func initNativeAd() {
-        print("NativeAd > init initNativeAd!!")
-
         let existsId: Bool = (self.params["id"] != nil) ? true : false
 
         if (existsId) {
@@ -161,7 +149,7 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * using native ad
      */
     func regNativeAdView() {
-        var adType: Int = self.params["ad_type"] as? Int ?? FANConstant.NATIVE_AD_TEMPLATE;
+        let adType: Int = self.params["ad_type"] as? Int ?? FANConstant.NATIVE_AD_TEMPLATE;
 
         switch adType {
         case FANConstant.NATIVE_AD_HORIZONTAL:
@@ -183,8 +171,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func initNativeAdViewAttributes() {
-        print("NativeAd > initNativeAdViewAttributes!!")
-
         let buttonColor: String = self.params["button_color"] as? String ?? "0xFFF8D000";
         let buttonBorderColor: String = self.params["button_border_color"] as? String ?? "0xFFF8D000";
         let buttonTitleColor: String = self.params["button_title_color"] as? String ?? "0xFF001E31";
@@ -221,8 +207,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
      * Register Native Ad
      */
     func regNativeAdViewTemplate() {
-        print("NativeAd > regNativeAdViewTemplate!!")
-
 //        let isRegistered: Bool = self.nativeAd.isRegistered
 //        if (isRegistered) {
 //            print("NativeAd > regNativeAdViewTemplate > isRegistered")
@@ -240,8 +224,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func initNativeAdViewAttributesCustomHorizontal() {
-        print("NativeAd > initNativeAdViewAttributesCustomHorizontal")
-
         let width: CGFloat = (nil != self.mainView) ? self.mainView.bounds.width : 0.0;
         let height: CGFloat = (nil != self.mainView) ? self.mainView.bounds.height : 0.0;
         let isMediaCover: Bool = self.params["is_media_cover"] as? Bool ?? false;
@@ -308,7 +290,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func regNativeAdViewCustomHorizontal() {
-        print("NativeAd > regNativeAdViewCustomHorizontal")
 //        let isRegistered: Bool = self.nativeAd.isRegistered
 //        if (isRegistered) {
 //            print("NativeAd > regNativeAdViewCustomHorizontal > isRegistered")
@@ -392,8 +373,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func initNativeAdViewAttributesCustomVertical() {
-        print("NativeAd > initNativeAdViewAttributesCustomVertical")
-
         let width: CGFloat = (nil != self.mainView) ? self.mainView.bounds.width : 0.0;
         let height: CGFloat = (nil != self.mainView) ? self.mainView.bounds.height : 0.0;
         let isMediaCover: Bool = self.params["is_media_cover"] as? Bool ?? false;
@@ -464,7 +443,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func regNativeAdViewCustomVertical() {
-        print("NativeAd > regNativeAdViewCustomVertical")
 //        let isRegistered: Bool = self.nativeAd.isRegistered
 //        if (isRegistered) {
 //            print("NativeAd > regNativeAdViewCustomHorizontal > isRegistered")
@@ -562,7 +540,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func nativeAdDidLoad(_ nativeAd: FBNativeAd) {
-        print("NativeAd > nativeAdDidLoad")
         self.nativeAd = nativeAd
 
         regNativeAdView()
@@ -578,7 +555,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func nativeAdDidDownloadMedia(_ nativeAd: FBNativeAd) {
-        print("NativeAd > nativeAdDidDownloadMedia")
 //        self.nativeAd = nativeAd
 //
 //        let placement_id: String = nativeAd.placementID
@@ -592,8 +568,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func nativeAdWillLogImpression(_ nativeAd: FBNativeAd) {
-        print("NativeAd > nativeAdWillLogImpression")
-
         let placement_id: String = nativeAd.placementID
         let invalidated: Bool = !nativeAd.isAdValid
         let arg: [String: Any] = [
@@ -605,11 +579,9 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func nativeAd(_ nativeAd: FBNativeAd, didFailWithError error: Error) {
-        print("NativeAd > nativeAd %s", error)
-
         let placement_id: String = nativeAd.placementID
         let invalidated: Bool = true
-        let errorStr: String = error as? String ?? "";
+        let errorStr: String = error.localizedDescription;
         let arg: [String: Any] = [
             FANConstant.PLACEMENT_ID_ARG: placement_id,
             FANConstant.INVALIDATED_ARG: invalidated,
@@ -620,8 +592,6 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func nativeAdDidClick(_ nativeAd: FBNativeAd) {
-        print("NativeAd > nativeAdDidClick")
-        
         let placement_id: String = nativeAd.placementID
         let invalidated: Bool = !nativeAd.isAdValid
         let arg: [String: Any] = [
