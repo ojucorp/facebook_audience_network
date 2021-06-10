@@ -304,8 +304,10 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
     channel.setMethodCallHandler((MethodCall call) {
       switch (call.method) {
         case ERROR_METHOD:
-          if (widget.listener != null)
+          if (widget.listener != null) {
             widget.listener!(NativeAdResult.ERROR, call.arguments);
+            widget.invalidatedCallback!(true);
+          }
           break;
         case LOADED_METHOD:
           if (widget.listener != null)
@@ -351,7 +353,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
         widget.invalidated = true;
       }
 
-      if (widget.invalidated && widget.invalidatedCallback != null) {
+      if (widget.invalidatedCallback != null) {
         widget.invalidatedCallback!(true);
       }
 
