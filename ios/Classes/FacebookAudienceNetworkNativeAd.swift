@@ -377,6 +377,8 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         let height: CGFloat = (nil != self.mainView) ? self.mainView.bounds.height : 0.0;
         let isMediaCover: Bool = self.params["is_media_cover"] as? Bool ?? false;
 
+        print("initNativeAdViewAttributesCustomVertical width: %f, height: %f, ", width, height)
+        
         self.nativeAdLayout = FacebookAudienceNetworkNativeAdLayout()
 
         // padding
@@ -555,15 +557,15 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
 
 
     func nativeAdDidDownloadMedia(_ nativeAd: FBNativeAd) {
-//        self.nativeAd = nativeAd
-//
-//        let placement_id: String = nativeAd.placementID
-//        let invalidated: Bool = !nativeAd.isAdValid
-//        let arg: [String: Any] = [
-//            FANConstant.PLACEMENT_ID_ARG: placement_id,
-//            FANConstant.INVALIDATED_ARG: invalidated,
-//        ]
-//        self.channel.invokeMethod(FANConstant.LOADED_METHOD, arguments: arg)
+        self.nativeAd = nativeAd
+
+        let placement_id: String = nativeAd.placementID
+        let invalidated: Bool = !nativeAd.isAdValid
+        let arg: [String: Any] = [
+            FANConstant.PLACEMENT_ID_ARG: placement_id,
+            FANConstant.INVALIDATED_ARG: invalidated,
+        ]
+        self.channel.invokeMethod(FANConstant.MEDIA_DOWNLOADED_METHOD, arguments: arg)
     }
 
 
