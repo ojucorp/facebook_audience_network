@@ -242,9 +242,9 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return Container(
         width: width,
-        height: widget.adType == NativeAdType.NATIVE_AD
-            ? widget.height
-            : widget.bannerAdSize.height!.toDouble(),
+        height: widget.adType == NativeAdType.NATIVE_BANNER_AD
+            ? widget.bannerAdSize.height!.toDouble()
+            : widget.height,
         child: UiKitView(
           viewType: _getChannelRegisterId(),
           onPlatformViewCreated: _onNativeAdViewCreated,
