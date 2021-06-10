@@ -340,7 +340,13 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           break;
       }
 
-      widget.invalidated = call.arguments['invalidated'];
+      final params = call.arguments as Map<String, dynamic>;
+      if (params.containsKey('invalidated')) {
+        widget.invalidated = call.arguments['invalidated'];
+      } else {
+        widget.invalidated = true;
+      }
+
       if (widget.invalidated) {
         widget.keepAlive = false;
         updateKeepAlive();
