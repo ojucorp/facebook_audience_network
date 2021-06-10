@@ -254,6 +254,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
             "ad_type": widget.adType.index,
             "banner_ad":
                 widget.adType == NativeAdType.NATIVE_BANNER_AD ? true : false,
+            "width": widget.width,
             "height": widget.adType == NativeAdType.NATIVE_BANNER_AD
                 ? widget.bannerAdSize.height
                 : widget.height,

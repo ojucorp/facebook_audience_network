@@ -371,13 +371,12 @@ class FacebookAudienceNetworkNativeAdView: NSObject, FlutterPlatformView, FBNati
         self.mainView.layoutIfNeeded()
     }
 
-
     func initNativeAdViewAttributesCustomVertical() {
-        let width: CGFloat = (nil != self.mainView) ? self.mainView.bounds.width : 0.0;
-        let height: CGFloat = (nil != self.mainView) ? self.mainView.bounds.height : 0.0;
+        let width: CGFloat = CGFloat(self.params["width"] as? Double ?? 0.0);
+        let height: CGFloat = CGFloat(self.params["height"] as? Double ?? 0.0);
         let isMediaCover: Bool = self.params["is_media_cover"] as? Bool ?? false;
 
-        print("initNativeAdViewAttributesCustomVertical width: %f, height: %f, ", width, height)
+        print("initNativeAdViewAttributesCustomVertical width ", width, ", height: ", height)
         
         self.nativeAdLayout = FacebookAudienceNetworkNativeAdLayout()
 
