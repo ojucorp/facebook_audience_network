@@ -350,6 +350,8 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
       if (widget.invalidated) {
         widget.keepAlive = false;
         updateKeepAlive();
+        setState(() {
+        });
       }
 
       return Future<dynamic>.value(true);
