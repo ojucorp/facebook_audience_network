@@ -308,7 +308,12 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
             widget.listener!(NativeAdResult.ERROR, call.arguments);
             widget.keepAlive = false;
             deactivate();
-            widget.invalidatedCallback!(true);
+            if (widget.invalidatedCallback != null) {
+              widget.invalidatedCallback!(true);
+            }
+            setState(() {
+              widget.invalidated = true;
+            });
           }
           break;
         case LOADED_METHOD:
