@@ -98,7 +98,7 @@ class FacebookNativeAd extends StatefulWidget {
   final bool isMediaCover;
 
   /// This defines if the ad view to be kept alive.
-  final bool keepAlive;
+  bool keepAlive;
 
   /// This defines if the ad view should be collapsed while loading
   final bool keepExpandedWhileLoading;
@@ -306,6 +306,8 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
         case ERROR_METHOD:
           if (widget.listener != null) {
             widget.listener!(NativeAdResult.ERROR, call.arguments);
+            widget.keepAlive = false;
+            deactivate();
             widget.invalidatedCallback!(true);
           }
           break;
